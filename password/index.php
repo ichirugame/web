@@ -1,6 +1,7 @@
 <?php
 $pass = 'abcdefghijklmnopqrstuvwxyz0123456789!#$%&()=~*+?/-';
 $passwd = substr(str_shuffle($pass), 0, 20);
+$hash_passwd = password_hash($passwd, PASSWORD_DEFAULT);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -15,7 +16,7 @@ $passwd = substr(str_shuffle($pass), 0, 20);
     <!--brタグでやるのはだめだがめんどいからこのまま-->
     <br>
     <br>
-    <br>
+    <p style="color: red;">passwordの暗号は使えるかはわかりません。</p>
     <p>パスワード生成</p>
     <p>a~z,0~9,!#$%&()=~*+?/-で20桁が自動生成されます。</p>
     <p>
@@ -23,6 +24,12 @@ $passwd = substr(str_shuffle($pass), 0, 20);
     echo "パスワード: ";
     echo $passwd;
     ?>
+    </p>
+    <p>
+        passwordを暗号化した場合: 
+        <?php
+        echo $hash_passwd;
+        ?>
     </p>
 </body>
 </html>

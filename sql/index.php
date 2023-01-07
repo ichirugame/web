@@ -1,6 +1,12 @@
 <?php
-$db = $_POST['sql'];
-$reset = null && $_POST['reset'];
+if(isset($_POST['sql'])){
+    $db = $_POST['sql'];
+}else{
+    $db = null;
+}
+if(isset($_POST['reset'])){
+    $reset = $_POST['reset'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -19,7 +25,6 @@ $reset = null && $_POST['reset'];
         <input class="btn--orange btn--cubic btn--shadow" type="submit" value="送信">
     </form>
     <form action="./index.php" method="POST">
-        <input type="hidden" name="sql" value="">
         <input class="reset--yellow reset--cubic" type="submit" type="reset" name="reset" value="リセットする">
     </form>
     <p>結果</p>
