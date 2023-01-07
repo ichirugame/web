@@ -16,11 +16,11 @@ $reset = null && $_POST['reset'];
     <form action="./index.php" method="POST">
     <textarea name="sql" style="width:500px; height:100px;"></textarea>
         <br>
-        <input type="submit" value="送信">
+        <input class="btn--orange btn--cubic btn--shadow" type="submit" value="送信">
     </form>
     <form action="./index.php" method="POST">
         <input type="hidden" name="sql" value="">
-        <input type="submit" type="reset" name="reset" value="リセットする">
+        <input class="reset--yellow reset--cubic" type="submit" type="reset" name="reset" value="リセットする">
     </form>
     <p>結果</p>
     <?php

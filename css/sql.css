@@ -4,3 +4,31 @@ body{
     text-align: center;
     font-size: 30px;
 }
+.btn--orange {
+    color: black;
+    background-color: #00eb8d;
+    border-bottom: 5px solid #00b84a81;
+    width: 100px;
+  }
+  .btn--orange:hover {
+    margin-top: 3px;
+    color: #fff;
+    background: #00eb8d;
+    border-bottom: 2px solid #2e914c52;
+  }
+  .btn--shadow {
+    -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+  }
+  .reset--yellow {
+    color: #000;
+    background-color: #aa00ff;
+    border-bottom: 5px solid #9200cc;
+  }
+  
+  .reset--yellow:hover {
+    margin-top: 3px;
+    color: rgb(255, 255, 255);
+    background: #be0aff;
+    border-bottom: 2px solid #9c00cc;
+  }
