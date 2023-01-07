@@ -1,9 +1,6 @@
 <?php
 $db = $_POST['sql'];
 $reset = null && $_POST['reset'];
-if($reset){
-    $db = null;
-}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -22,6 +19,7 @@ if($reset){
         <input type="submit" value="送信">
     </form>
     <form action="./index.php" method="POST">
+        <input type="hidden" name="sql" value="">
         <input type="submit" type="reset" name="reset" value="リセットする">
     </form>
     <p>結果</p>
