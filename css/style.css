@@ -4,3 +4,7 @@ body{
     text-align: center;
     font-size: 30px;
 }
+a{
+    color: blue;
+    text-decoration: none;
+}
