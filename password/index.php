@@ -1,5 +1,5 @@
 <?php
-$pass = 'abcdefghijklmnopqrstuvwxyz0123456789!#$%&()=~*+?/-';
+$pass = 'abcdefghijklmnopqrstuvwxyz0123456789!#$%&()=~*+?.<>[]{}@"/-ABCDEFGHIJKLNMOPQRSTUVWXYZ';
 $passwd = substr(str_shuffle($pass), 0, 20);
 ?>
 <!DOCTYPE html>
@@ -17,7 +17,7 @@ $passwd = substr(str_shuffle($pass), 0, 20);
     <br>
     <br>
     <p>パスワード生成</p>
-    <p>a~z,0~9,!#$%&()=~*+?/-で20桁が自動生成されます。</p>
+    <p>大文字の英文、小文字の英文、数字、記号が自動生成されます</p>
     <p>
     <?php
     echo "パスワード: ";
