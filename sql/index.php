@@ -3,7 +3,6 @@ if(isset($_POST['sql'])){
     $db = $_POST['sql'];
 }
 if(isset($_POST['reset'])){
-    $_POST['reset'];
     $db = null;
 }
 ?>
