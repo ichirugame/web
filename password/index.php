@@ -1,5 +1,5 @@
 <?php
-$pass = 'abcdefghijklmnopqrstuvwxyz0123456789!#$%&()=~*+?.<>[]{}@"/-ABCDEFGHIJKLNMOPQRSTUVWXYZ';
+$pass = 'abcdefghijklmnopqrstuvwxyz0123456789!#$%&()=~*+?.<>[]{}@"/-_ABCDEFGHIJKLNMOPQRSTUVWXYZ';
 $passwd = substr(str_shuffle($pass), 0, 20);
 ?>
 <!DOCTYPE html>

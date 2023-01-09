@@ -1,11 +1,10 @@
 <?php
 if(isset($_POST['sql'])){
     $db = $_POST['sql'];
-}else{
-    $db = null;
 }
 if(isset($_POST['reset'])){
-    $reset = $_POST['reset'];
+    $_POST['reset'];
+    $db = null;
 }
 ?>
 <!DOCTYPE html>
@@ -18,7 +17,7 @@ if(isset($_POST['reset'])){
     <link rel="stylesheet" type="text/css" href="../css/sql.css">
 </head>
 <body>
-    <p>sql文</p>
+    <p>sql文?</p>
     <form action="./index.php" method="POST">
     <textarea name="sql" style="width:500px; height:100px;"></textarea>
         <br>
