@@ -13,8 +13,8 @@ if(preg_match("/iPhone|iPod|mac*/", $user)){
 </head>
 <body>
     <h1>メモの機能は使えません。</h1>
-    <p>アクセスありがとうございます。</p>
-    <p>apple製品はメモの機能をサポートしていません。</p>
+    <p>メモ機能はapple製品をサポートしていません。</p>
+    <p><a href="../index.php">トップに戻る</a></p>
 </body>
 </html>
 <?php
