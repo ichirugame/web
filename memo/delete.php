@@ -5,7 +5,7 @@ if(isset($_COOKIE['memo'])){
 ?>
 <link rel="stylesheet" type="text/css" href="../css/style.css">
 <script>
-setTimeout("redirect()", 3000);
+setTimeout("redirect()", 1750);
 function redirect(){
     location.href="./index.php";
 }
@@ -16,7 +16,7 @@ function redirect(){
 ?>
 <link rel="stylesheet" type="text/css" href="../css/style.css">
 <script>
-setTimeout("redirect()", 3000);
+setTimeout("redirect()", 1750);
 function redirect(){
     location.href="./index.php";
 }
@@ -24,5 +24,6 @@ function redirect(){
 <?php
 }else{
     header('Location: ./index.php');
+    exit;
 }
 ?>

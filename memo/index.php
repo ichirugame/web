@@ -1,3 +1,10 @@
+<?php
+$user = $_SERVER['HTTP_USER_AGENT'];
+if(preg_match("/iPhone|iPod|mac*/", $user)){
+    header('Location: ./apple.php');
+    exit;
+}else{
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -36,3 +43,6 @@
     <p>メモを削除するには<a href="./delete.php">ここから</a>削除可能です</p>
 </body>
 </html>
+<?php
+}
+?>
