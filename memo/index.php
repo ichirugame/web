@@ -25,7 +25,7 @@ if(preg_match("/iPhone|iPod|mac*/", $user)){
     <form action="./completion.php" method="POST">
         <textarea name="memo" style="width:500px; height:100px;"></textarea>
         <br>
-        <input type="submit" value="送信" style="font-size: 20px; width: 150px;">
+        <input type="submit" value="保存" style="font-size: 20px; width: 150px;">
     </form>
     <p>クッキーに保存されているメモの内容</p>
     <div class="size">
