@@ -11,11 +11,17 @@ $passwd = substr(str_shuffle($pass), 0, 20);
     <title>簡易パスワード生成</title>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
+<style>
+    .line{
+        margin: 210px;
+    }
+    .text{
+        font-size: 45px;
+    }
+</style>
 <body>
-    <!--brタグでやるのはだめだがめんどいからこのまま-->
-    <br>
-    <br>
-    <br>
+    <div class="line"></div>
+    <div class="text">
     <p>パスワード生成</p>
     <p>大文字の英文、小文字の英文、数字、記号が自動生成されます</p>
     <p>
@@ -24,5 +30,6 @@ $passwd = substr(str_shuffle($pass), 0, 20);
     echo $passwd;
     ?>
     </p>
+</div>
 </body>
 </html>

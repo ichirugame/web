@@ -18,14 +18,33 @@ if(preg_match("/iPhone|iPod|mac*/", $user)){
     .size{
         font-size: 25px;
     }
+    input[type=checkbox]{
+        transform: scale(1.8);
+        margin: 0 6px 0 0;
+    }
 </style>
 <body>
     <h1>メモの内容をクッキーに保存します。</h1>
-    <p>クッキーの有効期限は約3年です。</p>
+    <p>通常は約3年です。</p>
+    <p style="color: red;">重要なことは書かないでください！</p>
     <form action="./completion.php" method="POST">
         <textarea name="memo" style="width:500px; height:100px;"></textarea>
         <br>
+        <label>
+            <input type="checkbox" name="Deadline">約5分でcookieの削除
+        </label>
+        <br>
+        <?php
+        if(empty($_COOKIE['memo'])){
+        ?>
         <input type="submit" value="保存" style="font-size: 20px; width: 150px;">
+        <?php
+        }elseif(isset($_COOKIE['memo'])){
+        ?>
+        <input type="submit" value="上書き保存" style="font-size: 20px; width: 150px;">
+        <?php
+        }
+        ?>
     </form>
     <p>クッキーに保存されているメモの内容</p>
     <div class="size">
