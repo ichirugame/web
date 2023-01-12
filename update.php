@@ -22,7 +22,7 @@ if(isset($_POST['update'])){
         if($config_update){
         ?>
         <input type="hidden" name="update">
-        <input type="submit" value="アップデートを実行" style="font-size: 20px; width: 150px;">
+        <input type="submit" value="アップデートを実行" style="font-size: 20px; width: 350px;">
         <?php
         }else{
         ?>
