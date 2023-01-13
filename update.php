@@ -1,7 +1,7 @@
 <?php
 $config_update = false;
 if(isset($_POST['update'])){
-    if(isset($config_update)){
+    if($config_update){
        shell_exec("sh ./update.sh");
     }
 }
