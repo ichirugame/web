@@ -1,6 +1,5 @@
 <?php
-$user = $_SERVER['HTTP_USER_AGENT'];
-if(preg_match("/iPhone|iPod|mac*/", $user)){
+if(preg_match("/iPhone|iPod|mac*/", $_SERVER['HTTP_USER_AGENT'])){
 ?>
 <!DOCTYPE html>
 <html lang="ja">

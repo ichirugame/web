@@ -1,6 +1,5 @@
 <?php
-$user = $_SERVER['HTTP_USER_AGENT'];
-if(preg_match("/iPhone|iPod|mac*/", $user)){
+if(preg_match("/iPhone|iPod|mac*/", $_SERVER['HTTP_USER_AGENT'])){
     header('Location: ./apple.php');
     exit;
 }else{
@@ -28,7 +27,13 @@ if(preg_match("/iPhone|iPod|mac*/", $user)){
     <p>通常は約3年です。</p>
     <p style="color: red;">重要なことは書かないでください！</p>
     <form action="./completion.php" method="POST">
-        <textarea name="memo" style="width:500px; height:100px;"></textarea>
+<textarea name="memo" style="width:500px; height:100px;">
+<?php
+if(isset($_COOKIE['memo'])){
+echo $_COOKIE['memo'];
+}
+?>
+</textarea>
         <br>
         <label>
             <input type="checkbox" name="Deadline">約5分でcookieの削除
@@ -46,19 +51,6 @@ if(preg_match("/iPhone|iPod|mac*/", $user)){
         }
         ?>
     </form>
-    <p>クッキーに保存されているメモの内容</p>
-    <div class="size">
-        <p>段落は半角になります。</p>
-    </div>
-    <?php
-    if(empty($_COOKIE['memo'])){
-        echo "保存されていません";
-    }elseif(isset($_COOKIE['memo'])){
-        echo $_COOKIE['memo']."<br>\n";
-    }else{
-        echo "不明なエラー";
-    }
-    ?>
     <p>メモを削除するには<a href="./delete.php">ここから</a>削除可能です</p>
 </body>
 </html>

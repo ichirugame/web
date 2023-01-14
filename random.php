@@ -2,8 +2,7 @@
 $value = filter_input(INPUT_GET, 'value');
 $pass = filter_input(INPUT_GET, 'random');
 $random = substr(str_shuffle($pass), 0, $value);
-$reset = filter_input(INPUT_POST, 'reset');
-if(isset($reset)){
+if(isset($_POST['reset'])){
     $random = null;
 }
 ?>
