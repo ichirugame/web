@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パスワード生成</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <script src="../js/checkbox.js"></script>
+</head>
+<style>
+    .line{
+        margin: 200px;
+    }
+    .text{
+        font-size: 45px;
+    }
+    .button{
+        height: 70px;
+        width: 250px;
+        background-color: beige;
+        color: rgb(30, 117, 117);
+    }
+</style>
+<body>
+    <div class="line"></div>
+    <div class="text">
+    <p>パスワード生成設定</p>
+    <form action="./completion.php" method="post">
+        <input type="submit" name="none" value="指定なし" class="button">
+    </form>
+    <form action="./completion.php" method="post">
+        <input type="submit" name="nosym" value="記号なし" class="button">
+    </form>
+    <form action="./completion.php" method="post">
+        <input type="submit" name="number" value="数字のみ" class="button">
+    </form>
+    <form action="./completion.php" method="post">
+        <input type="submit" name="letter" value="英文のみ" class="button">
+    </form>
+</div>
+</body>
+</html>

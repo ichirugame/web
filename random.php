@@ -1,6 +1,6 @@
 <?php
-$value = filter_input(INPUT_GET, 'value');
-$pass = filter_input(INPUT_GET, 'random');
+$value = filter_input(INPUT_POST, 'value');
+$pass = filter_input(INPUT_POST, 'random');
 $random = substr(str_shuffle($pass), 0, $value);
 if(isset($_POST['reset'])){
     $random = null;
@@ -23,7 +23,7 @@ if(isset($_POST['reset'])){
 <body>
     <p>指定した文字がランダムに生成されます。</p>
     <p>文字数の指定を30にしても30もランダム生成されるか、わかりません。</p>
-    <form action="./random.php" method="GET">
+    <form action="./random.php" method="POST">
         <p>生成させたい文字</p>
         <input type="text" name="random" style="width: 250px;">
         <br>
