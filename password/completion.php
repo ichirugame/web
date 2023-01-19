@@ -8,6 +8,8 @@ if(isset($_POST['none'])){
     $pass = '123456789';
 }elseif(isset($_POST['letter'])){
     $pass = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLNMOPQRSTUVWXYZ';
+}else{
+    include_once('../error/400.php');
 }
 $passwd = substr(str_shuffle($pass), 0, 20);
 ?>
