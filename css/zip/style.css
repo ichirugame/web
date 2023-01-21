@@ -1,0 +1,21 @@
+html{
+    background-color: black;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+}
+a{
+    color: blue;
+    text-decoration: none;
+}
+.error{
+    color: red;
+}
+.upload{
+    display: inline-block;
+    width: 500px;
+    padding: 50px;
+}
+.line{
+    margin: 50px;
+}
