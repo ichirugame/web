@@ -1,4 +1,5 @@
 <?php
+if(isset($_GET['zipfile'])){
 if($_POST && is_uploaded_file($_FILES['zip']['tmp_name'])){
     $source = $_FILES['zip']['tmp_name'];
     $filename = $_FILES['zip']['name'];
@@ -32,7 +33,7 @@ if($_POST && is_uploaded_file($_FILES['zip']['tmp_name'])){
 <script>
     setTimeout("redirect()", 2000);
     function redirect(){
-        location.href="./compression.php?download";
+        location.href="./compression.php?zipfile&download";
     }
 </script>
 <body>
@@ -45,12 +46,14 @@ if($_POST && is_uploaded_file($_FILES['zip']['tmp_name'])){
     ?>
     <p>それ以降は24時間以降に削除されます。</p>
     <form action="./compression.php" method="GET">
+        <input type="hidden" name="zipfile">
         <input type="hidden" name="delete">
         <input type="submit" value="サーバーからZIPを削除" style="width: 250px; height: 50px;">
     </form>
     <p>ダウンロードされませんか？</p>
     <p>されない場合は下のボタンをクリックしてください。</p>
     <form action="./compression.php" method="GET">
+        <input type="hidden" name="zipfile">
         <input type="hidden" name="download">
         <input type="submit" value="ダウンロード" style="width: 250px; height: 50px;">
     </form>
@@ -68,53 +71,11 @@ if(isset($_GET['download'])){
         header('Content-Length: '.filesize("$zip"));
         echo file_get_contents($zip);
     }elseif(empty($_COOKIE['zip'])){
-        echo '不明';
+        echo 'セットされていません。';
     }
 }
-if(isset($_GET['delete'])){
-    if(isset($_COOKIE['zip'])){
-        $zipf = $_COOKIE['zip'];
-        $zipfile = __DIR__ . '/download/' . $zipf;
-        unlink($zipfile);
-        setcookie('zip', null, time() - 30);
-    }
-?>
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>削除完了</title>
-    <link rel="stylesheet" type="text/css" href="../css/zip/style.css">
-</head>
-<body>
-    <?php
-    if(isset($_COOKIE['zip'])){
-    ?>
-    <p>サーバーからZIPファイルを削除しました。</p>
-    <p><a href="../">トップに戻る</a></p>
-    <?php
-    }elseif(empty($_COOKIE['zip'])){
-    ?>
-    <p>削除するための必要な情報がありません</p>
-    <p>サーバーからZIPファイルを削除するためにダウンロードされたZIP名を入力してください。</p>
-    <p>ファイル拡張子までは書かないでください</p>
-    <form action="./compression.php" method="GET">
-        <div>
-            <input type="text" name="zipname" style="width: 40%; height: 40px;">
-        </div>
-        <input type="submit" value="ZIPファイルを削除" style="width: 250px; height: 50px;">
-    </form>
-    <?php
-    }
-    ?>
-</body>
-</html>
-<?php
-}
-if(isset($_GET['zipname'])){
-    $zipname = $_GET['zipname'] . '.zip';
+if(isset($_POST['zipname'])){
+    $zipname = $_POST['zipname'] . '.zip';
     $zipfile = __DIR__ . '/download/' . $zipname;
     if(file_exists($zipfile)){
         $delete = $zipname . 'を削除することに成功しました。';
@@ -143,6 +104,151 @@ if(isset($_GET['zipname'])){
     </p>
     <p>ご利用いただきありがとうございました。</p>
     <p><a href="../">トップに戻る</a></p>
+</body>
+</html>
+<?php
+}
+//-----ZIP-----
+}elseif(isset($_GET['targzfile'])){
+    if($_POST && is_uploaded_file($_FILES['targz']['tmp_name'])){
+        $source = $_FILES['targz']['tmp_name'];
+        $filename = $_FILES['targz']['name'];
+        $str = md5(uniqid(mt_rand(), true));
+        $targzfile = __DIR__ . '/download/' . $str . '.tar.gz';
+        exec("tar -zcf $targzfile $source");
+        $targzfi = $str . '.tar.gz';
+        $time = time() + 86400;
+        $domain = $_SERVER['SERVER_NAME'];
+        setcookie('targz', $targzfi, $time, $domain);
+?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圧縮完了</title>
+</head>
+<script>
+    setTimeout("redirect()", 2000);
+    function redirect(){
+        location.href="./compression.php?targzfile&download";
+    }
+</script>
+<body>
+    <p>targz圧縮が完了しました。</p>
+    <p>サーバーからZIPを削除できるのは24時間以内です。</p>
+    <p>それ以降は24時間以降に削除されます。</p>
+    <form action="./compression.php" method="GET">
+        <input type="hidden" name="delete">
+        <input type="submit" value="サーバーからZIPを削除" style="width: 250px; height: 50px;">
+    </form>
+    <p>ダウンロードされませんか？</p>
+    <p>されない場合は下のボタンをクリックしてください。</p>
+    <form action="./compression.php" method="GET">
+        <input type="hidden" name="targzfile">
+        <input type="hidden" name="download">
+        <input type="submit" value="ダウンロード" style="width: 250px; height: 50px;">
+    </form>
+</body>
+</html>
+<?php
+}
+if(isset($_GET['download'])){
+    if(isset($_COOKIE['targz'])){
+        $targzfile = './download/' . $_COOKIE['targz'];
+        header("Content-type: application/gzip");
+        header("Content-Disposition:attachment;filename = $targzfile");
+        header('Content-Length: '.filesize("$targzfile"));
+        echo file_get_contents($targzfile);
+    }
+}
+//---tar.gz-----
+}
+if(isset($_GET['delete'])){
+    if(isset($_COOKIE['zip'])){
+        $zipf = $_COOKIE['zip'];
+        $zipfile = __DIR__ . '/download/' . $zipf;
+        unlink($zipfile);
+        setcookie('zip', null, time() - 30);
+    }elseif(isset($_COOKIE['targz'])){
+        $targz = __DIR__ . '/download/' . $_COOKIE['targz'];
+        unlink($targz);
+        setcookie('targz', null, time() - 30);
+    }
+?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>削除完了</title>
+    <link rel="stylesheet" type="text/css" href="../css/zip/style.css">
+</head>
+<body>
+    <?php
+    if(isset($_COOKIE['zip'])){
+    ?>
+    <p>サーバーからZIPファイルを削除しました。</p>
+    <p><a href="../">トップに戻る</a></p>
+    <?php
+    }elseif(isset($_COOKIE['targz'])){
+    ?>
+    <p>サーバーからtargzファイルを削除しました。</p>
+    <p><a href="../">トップに戻る</a></p>
+    <?php
+    }else{
+    ?>
+    <p>必要な情報を取得できませんでした。</p>
+    <p>サーバーから圧縮ファイルを削除するには以下のフォームにファイル名を入れて送信してください。</p>
+    <p>ファイル拡張子まで入れてください。</p>
+    <form action="compression.php?forgot" method="post">
+        <div>
+            <input type="text" name="filename">
+        </div>
+        <input type="submit" value="ファイルを検索する" style="width: 250px; height: 50px;">
+    </form>
+    <?php
+    }
+    ?>
+</body>
+</html>
+<?php
+}
+if(isset($_GET['forgot'])){
+    if(preg_match('/_download_/', $_POST['filename'])){
+        $filename = str_replace('_download_', null, $_POST['filename']);
+    }else{
+        $filename = $_POST['filename'];
+    }
+    $file = __DIR__ . '/download/' . $filename;
+    $result = file_exists($file);
+?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>結果</title>
+    <link rel="stylesheet" type="text/css" href="../css/zip/style.css">
+</head>
+<body>
+    <?php
+    if($result){
+        unlink($file);
+    ?>
+    <p>指定されたファイルを発見したため削除しました。</p>
+    <p>ご利用いただきありがとうございました。</p>
+    <?php
+    }else{
+    ?>
+    <p>指定されたファイルはありませんでした。</p>
+    <p>ファイル名を間違えている可能性があります。</p>
+    <?php
+    }
+    ?>
 </body>
 </html>
 <?php
