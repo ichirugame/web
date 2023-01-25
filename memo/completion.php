@@ -1,13 +1,9 @@
 <?php
+ini_set('session.cookie_lifetime', 94608000);
+session_name('memo');
+session_start();
 if(isset($_POST['memo'])){
-    if(empty($_POST['Deadline'])){
-        $time = time() + 94608000;
-    }elseif(isset($_POST['Deadline'])){
-        $time = time() + 300;
-    }
-    $memo_date = $_POST['memo'];
-    $domain = $_SERVER['SERVER_NAME'];
-    setcookie('memo', $memo_date, $time, $domain);
+    $_SESSION['memo'] = $_POST['memo'];
     header('Location: ./index.php');
     exit;
 }else{

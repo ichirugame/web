@@ -1,8 +1,7 @@
 <?php
-if(preg_match("/iPhone|iPod|mac*/", $_SERVER['HTTP_USER_AGENT'])){
-    header('Location: ./apple.php');
-    exit;
-}else{
+ini_set('session.cookie_lifetime', 94608000);
+session_name('memo');
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -23,28 +22,25 @@ if(preg_match("/iPhone|iPod|mac*/", $_SERVER['HTTP_USER_AGENT'])){
     }
 </style>
 <body>
-    <h1>メモの内容をクッキーに保存します。</h1>
+    <h1>メモの内容をセッションに保存します。</h1>
     <p>通常は約3年です。</p>
     <p style="color: red;">重要なことは書かないでください！</p>
     <form action="./completion.php" method="POST">
+<div>
 <textarea name="memo" style="width:500px; height:100px;">
 <?php
-if(isset($_COOKIE['memo'])){
-echo $_COOKIE['memo'];
+if(isset($_SESSION['memo'])){
+echo $_SESSION['memo'];
 }
 ?>
 </textarea>
-        <br>
-        <label>
-            <input type="checkbox" name="Deadline">約5分でcookieの削除
-        </label>
-        <br>
+</div>
         <?php
-        if(empty($_COOKIE['memo'])){
+        if(empty($_SESSION['memo'])){
         ?>
         <input type="submit" value="保存" style="font-size: 20px; width: 150px;">
         <?php
-        }elseif(isset($_COOKIE['memo'])){
+        }elseif(isset($_SESSION['memo'])){
         ?>
         <input type="submit" value="上書き保存" style="font-size: 20px; width: 150px;">
         <?php
@@ -54,6 +50,3 @@ echo $_COOKIE['memo'];
     <p>メモを削除するには<a href="./delete.php">ここから</a>削除可能です</p>
 </body>
 </html>
-<?php
-}
-?>
