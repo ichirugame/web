@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせページ</title>
+</head>
+<style>
+    body{
+        background-color: black;
+        text-align: center;
+        color: white;
+    }
+    .button{
+        font-size: 35px;
+        width: 170px;
+    }
+</style>
+<body>
+    <p>お問い合わせページ</p>
+    <form action="send.php" method="post">
+        <div>
+            <p>メールアドレス</p>
+            <input type="email" name="email" required>
+        </div>
+        <div>
+            <p>お名前</p>
+            <input type="text" name="name" required>
+        </div>
+        <div>
+            <p>タイトル</p>
+            <input type="text" name="title" required>
+        </div>
+        <div>
+            <p>本文</p>
+            <textarea name="content" style="width:500px; height:100px;" required></textarea>
+        </div>
+        <div>
+            <input type="submit" value="送信" class="button">
+        </div>
+    </form>
+</body>
+</html>
