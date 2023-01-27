@@ -1,4 +1,5 @@
 <?php
+session_name('compression');
 session_start();
 $token = uniqid(mt_rand(), true);
 $_SESSION['token'] = $token;

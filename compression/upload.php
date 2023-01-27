@@ -1,13 +1,12 @@
 <?php
+session_name('compression');
 session_start();
 $token = isset($_POST["token"]) ? $_POST["token"] : "";
 $session_token = isset($_SESSION["token"]) ? $_SESSION["token"] : "";
 unset($_SESSION["token"]);
 if($token != "" && $token == $session_token){
-    $time = time() + 86400;
     $date = mt_rand();
-    $domain = $_SERVER['SERVER_NAME'];
-    setcookie('com', $date, $time, $domain);
+    $_SESSION['com'] = $date;
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -28,13 +27,16 @@ if($token != "" && $token == $session_token){
     <h1>ZIP、tar.gzのどちらかを指定してください。</h1>
     <div style="margin: 30px;"></div>
     <form action="upload.php?zip" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="token" value="<?php echo $token;?>">
         <input type="submit" value="ZIPに圧縮にする" style="width: 250px; height: 50px;">
     </form>
     <div class="line"></div>
     <form action="upload.php?targz" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="token" value="<?php echo $token;?>">
         <input type="submit" value="tar.gzに圧縮にする" style="width: 250px; height: 50px;">
+    </form>
+    <div class="line"></div>
+    <form action="directory.php" method="GET">
+        <input type="hidden" name="index">
+        <input type="submit" value="複数アップロード" style="width: 250px; height: 50px;">
     </form>
 </body>
 </html>
@@ -42,8 +44,8 @@ if($token != "" && $token == $session_token){
 }
 //----------------------------------------------------------------
 if(isset($_GET['zip'])){
-    if(isset($_COOKIE['com'])){
-        setcookie('com', null, time() - 300);
+    if(isset($_SESSION['com'])){
+        unset($_SESSION["com"]);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -86,8 +88,8 @@ if(isset($_GET['zip'])){
 <?php
 }
 }elseif(isset($_GET['targz'])){
-    if(isset($_COOKIE['com'])){
-        setcookie('com', null, time() - 300);
+    if(isset($_SESSION['com'])){
+        unset($_SESSION["com"]);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
