@@ -1,5 +1,16 @@
 <?php
-ini_set('session.cookie_lifetime', 94608000);
+include_once('../db.php');
+if($sqlite){
+    $pdo = new PDO('sqlite:' . $database_name);
+}else{
+    $pdo = new PDO('mysql:dbname=' . $database_name . ';host=' . $host . ';' , $user, $passwd);
+}
+$sql = "SELECT memo FROM service_setting WHERE id = 1;";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$result = $stmt->fetch();
+$pdo = null;
+if($result['memo']){
 session_name('memo');
 session_start();
 ?>
@@ -30,7 +41,7 @@ session_start();
 <textarea name="memo" style="width:500px; height:100px;">
 <?php
 if(isset($_SESSION['memo'])){
-echo $_SESSION['memo'];
+echo htmlspecialchars($_SESSION['memo'], ENT_QUOTES);
 }
 ?>
 </textarea>
@@ -50,3 +61,7 @@ echo $_SESSION['memo'];
     <p>メモを削除するには<a href="./delete.php">ここから</a>削除可能です</p>
 </body>
 </html>
+<?php
+}else{
+    include_once('../error/ban.html');
+}

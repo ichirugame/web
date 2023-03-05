@@ -1,6 +1,19 @@
 <?php
+include_once('../db.php');
+if($sqlite){
+    $pdo = new PDO('sqlite:' . $database_name);
+}else{
+    $pdo = new PDO('mysql:dbname=' . $database_name . ';host=' . $host . ';' , $user, $passwd);
+}
+$sql = "SELECT file_compression FROM service_setting WHERE id = 1;";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$result = $stmt->fetch();
+$pdo = null;
+if($result['file_compression']){
 if(isset($_GET['zipfile'])){
 if($_POST && is_uploaded_file($_FILES['zip']['tmp_name'])){
+    //ファイル圧縮
     $source = $_FILES['zip']['tmp_name'];
     $filename = $_FILES['zip']['name'];
     $str = md5(uniqid(mt_rand(), true));
@@ -64,6 +77,7 @@ if($_POST && is_uploaded_file($_FILES['zip']['tmp_name'])){
 }
 if(isset($_GET['download'])){
     if(isset($_COOKIE['zip'])){
+        //ZIPダウンロード
         $zip_file = $_COOKIE['zip'];
         $zip = './download/' . $zip_file;
         header("Content-type: application/zip");
@@ -75,6 +89,7 @@ if(isset($_GET['download'])){
     }
 }
 if(isset($_POST['zipname'])){
+    //ZIP削除
     $zipname = $_POST['zipname'] . '.zip';
     $zipfile = __DIR__ . '/download/' . $zipname;
     if(file_exists($zipfile)){
@@ -111,6 +126,7 @@ if(isset($_POST['zipname'])){
 //-----ZIP-----
 }elseif(isset($_GET['targzfile'])){
     if($_POST && is_uploaded_file($_FILES['targz']['tmp_name'])){
+        //圧縮
         $source = $_FILES['targz']['tmp_name'];
         $filename = $_FILES['targz']['name'];
         $str = md5(uniqid(mt_rand(), true));
@@ -156,6 +172,7 @@ if(isset($_POST['zipname'])){
 }
 if(isset($_GET['download'])){
     if(isset($_COOKIE['targz'])){
+        //圧縮ダウンロード
         $targzfile = './download/' . $_COOKIE['targz'];
         header("Content-type: application/gzip");
         header("Content-Disposition:attachment;filename = $targzfile");
@@ -167,6 +184,7 @@ if(isset($_GET['download'])){
 }
 if(isset($_GET['delete'])){
     if(isset($_COOKIE['zip'])){
+        //圧縮削除
         $zipf = $_COOKIE['zip'];
         $zipfile = __DIR__ . '/download/' . $zipf;
         unlink($zipfile);
@@ -253,4 +271,6 @@ if(isset($_GET['forgot'])){
 </html>
 <?php
 }
-?>
+}else{
+    include_once('../error/ban.html');
+}

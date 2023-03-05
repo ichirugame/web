@@ -24,7 +24,7 @@ $bash = password_hash($passwd, PASSWORD_DEFAULT);
 <p>結果</p>
 <p>入力された内容: 
     <?php
-    echo $passwd;
+    echo htmlspecialchars($passwd, ENT_QUOTES);
     ?>
 </p>
 <p>暗号化: 

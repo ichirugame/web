@@ -1,4 +1,16 @@
 <?php
+include_once('../db.php');
+if($sqlite){
+    $pdo = new PDO('sqlite:' . $database_name);
+}else{
+    $pdo = new PDO('mysql:dbname=' . $database_name . ';host=' . $host . ';' , $user, $passwd);
+}
+$sql = "SELECT file_compression FROM service_setting WHERE id = 1;";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$result = $stmt->fetch();
+$pdo = null;
+if($result['file_compression']){
 session_name('compression');
 session_start();
 $token = uniqid(mt_rand(), true);
@@ -37,3 +49,7 @@ $_SESSION['token'] = $token;
     </form>
 </body>
 </html>
+<?php
+}else{
+    include_once('../error/ban.html');
+}

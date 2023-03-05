@@ -1,4 +1,5 @@
 <?php
+$db = null;
 if(isset($_POST['sql'])){
     $db = $_POST['sql'];
 }
@@ -33,7 +34,7 @@ if(isset($_POST['reset'])){
     <p>
         $query = "
         <?php
-        echo $db;
+        echo htmlspecialchars($db, ENT_QUOTES);
         ?>
         ";
     </p>
