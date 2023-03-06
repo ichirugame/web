@@ -9,7 +9,6 @@ $sql = "SELECT port FROM service_setting WHERE id = 1;";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $result = $stmt->fetch();
-$pdo = null;
 if($result['port']){
 ini_set('default_socket_timeout',10);
 $text = null;
@@ -84,3 +83,4 @@ if(isset($_POST['domain'], $_POST['port'])){
 }else{
     include_once('../error/ban.html');
 }
+$pdo = null;
