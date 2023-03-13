@@ -1,4 +1,8 @@
 <?php
+/*
+tar.gz圧縮は絶対パスで圧縮されます。
+zipは相対パスで圧縮されます.
+*/
 include_once('../db.php');
 if($sqlite){
     $pdo = new PDO('sqlite:' . $database_name);
@@ -35,8 +39,8 @@ if(isset($_GET['index'])){
     <p style="color: red;">セキュリティー対策はしていません。</p>
     <p style="color: red;">使用は自己責任です。</p>
     <p style="color: red;">責任は持ちません。</p>
-    <p>ZIP圧縮したい方は<a href="./directory.php?zip">こちら</a></p>
-    <form action="directory.php?upload" method="post" enctype="multipart/form-data">
+    <p>ZIP圧縮したい方は<a href="./multiple.php?zip">こちら</a></p>
+    <form action="multiple.php?upload" method="post" enctype="multipart/form-data">
         <div>
             <input type="file" name="file[]" accept="text/*,image/*" required multiple>
         </div>
@@ -59,7 +63,7 @@ if(isset($_GET['upload'])){
             }
         }
         $_SESSION['directory'] = $str;
-        header('Location: ./directory.php?compression&targz');
+        header('Location: ./multiple.php?compression&targz');
         exit;
     }
 }
@@ -85,20 +89,20 @@ if(isset($_GET['compression'])){
 <script>
     setTimeout("redirect()", 2000);
     function redirect(){
-        location.href="./directory.php?download&targz";
+        location.href="./multiple.php?download&targz";
     }
 </script>
 <body>
     <p>圧縮ができました。</p>
     <p>数秒後にダウンロードされます。</p>
     <p>アップロードしたファイルをサーバーから削除する場合は下の削除ボタンを押してください。</p>
-    <form action="directory.php" method="get">
+    <form action="multiple.php" method="get">
         <input type="hidden" name="delete">
         <input type="hidden" name="targz">
         <input type="submit" value="サーバーから削除" style="width: 250px; height: 50px;">
     </form>
     <p>ダウンロードされない場合はダウンロードボタンを押してください。</p>
-    <form action="directory.php" method="get">
+    <form action="multiple.php" method="get">
         <input type="hidden" name="download">
         <input type="hidden" name="targz">
         <input type="submit" value="ダウンロード" style="width: 250px; height: 50px;">
@@ -155,7 +159,7 @@ if(isset($_GET['delete'])){
 </head>
 <body>
     <h1>ファイル情報がありません。</h1>
-    <p><a href="./directory.php?delete&recovery">サーバーからファイルを見つける</a></p>
+    <p><a href="./multiple.php?delete&recovery">サーバーからファイルを見つける</a></p>
 </body>
 </html>
 <?php
@@ -178,7 +182,7 @@ if(isset($_GET['recovery'])){
     <p>サーバーからアップロードしたファイルは削除できませんが圧縮ファイルは削除できます。</p>
     <p>サーバーから圧縮ファイルを削除する場合は以下の情報をフォームに入力してください。</p>
     <p>ファイル拡張子まで入力してください。</p>
-    <form action="directory.php" method="GET">
+    <form action="multiple.php" method="GET">
         <input type="hidden" name="delete">
         <input type="hidden" name="recovery">
         <input type="hidden" name="result">
@@ -259,7 +263,7 @@ if(isset($_GET['zip'])){
 <body>
     <p>ZIPファイルに圧縮します。</p>
     <p>
-    <form action="directory.php?upload=&zip=" method="post" enctype="multipart/form-data">
+    <form action="multiple.php?upload=&zip=" method="post" enctype="multipart/form-data">
         <div>
             <input type="file" name="zipfile[]" accept="text/*,image/*" required multiple>
         </div>
@@ -280,7 +284,7 @@ if(isset($_GET['upload'], $_FILES['zipfile'])){
         }
     }
     $_SESSION['director'] = $str;
-    header('Location: ./directory.php?zip&compression');
+    header('Location: ./multiple.php?zip&compression');
     exit;
 }
 if(isset($_GET['compression'], $_SESSION['director'])){
@@ -303,20 +307,20 @@ if(isset($_GET['compression'], $_SESSION['director'])){
 <script>
     setTimeout("redirect()", 2000);
     function redirect(){
-        location.href="./directory.php?download&zip";
+        location.href="./multiple.php?download&zip";
     }
 </script>
 <body>
     <p>圧縮ができました。</p>
     <p>数秒後にダウンロードされます。</p>
     <p>アップロードしたファイルをサーバーから削除する場合は下の削除ボタンを押してください。</p>
-    <form action="directory.php" method="get">
+    <form action="multiple.php" method="get">
         <input type="hidden" name="zip">
         <input type="hidden" name="delete">
         <input type="submit" value="サーバーから削除" style="width: 250px; height: 50px;">
     </form>
     <p>ダウンロードされない場合はダウンロードボタンを押してください。</p>
-    <form action="directory.php" method="get">
+    <form action="multiple.php" method="get">
         <input type="hidden" name="download">
         <input type="hidden" name="zip">
         <input type="submit" value="ダウンロード" style="width: 250px; height: 50px;">
@@ -336,7 +340,7 @@ if(isset($_GET['download'], $_SESSION['zipfile'])){
 if(isset($_GET['delete'], $_SESSION['zipfile'], $_SESSION['director'])){
     $zipfile = $_SESSION['zipfile'];
     $source = $_SESSION['director'];
-    unlink(__DIR__ . '/download/' . $zipfile);
+    unlink(__DIR__ . '/download/' . $zipfile . '.zip');
     array_map('unlink', glob(__DIR__ . '/upload/' . $source . '/*.*'));
     $rm = rmdir(__DIR__ . '/upload/' . $source);
     $_SESSION = array();

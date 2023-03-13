@@ -46,9 +46,14 @@ if($token != "" && $token == $session_token){
         <input type="submit" value="tar.gzに圧縮にする" style="width: 250px; height: 50px;">
     </form>
     <div class="line"></div>
-    <form action="directory.php" method="GET">
+    <form action="new-multiple.php" method="GET">
         <input type="hidden" name="index">
-        <input type="submit" value="複数アップロード" style="width: 250px; height: 50px;">
+        <input type="submit" value="複数ファイルをZIP圧縮(new)" style="width: 250px; height: 50px;">
+    </form>
+    <div class="line"></div>
+    <form action="multiple.php" method="GET">
+        <input type="hidden" name="index">
+        <input type="submit" value="複数ファイルをzip(tar.gz)に圧縮(old)" style="width: 250px; height: 50px;">
     </form>
 </body>
 </html>
